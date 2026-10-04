@@ -16,8 +16,8 @@ Types seen in TIS's library search results (the objType= in each result link):
   ai, ai-gst, ai-set   accessory installation instructions
   qtg         quick training guides
 
-Stops with exit 3 when TIS rejects the session.  Reads COOKIES, DOWNLOAD_TO and WEBSITE from the
-environment (get-docs.sh exports them from tis-clone.cfg).
+Stops with exit 3 when TIS rejects the session.  Reads COOKIES, DOWNLOAD_TO, WEBSITE and SIID from
+the environment (get-docs.sh exports them from tis-clone.cfg).
 
 usage: tis-docs.py TYPE:ID [TYPE:ID ...]
 """
@@ -25,7 +25,7 @@ import http.cookiejar, os, re, sys, time, urllib.error, urllib.request
 
 SITE = os.environ.get('WEBSITE', 'https://techinfo.toyota.com').rstrip('/')
 ROOT = os.path.join(os.environ['DOWNLOAD_TO'], 'techinfo.toyota.com')
-SIID = '?sisuffix=ff&locale=en&siid=1520435234587'
+SIID = '?sisuffix=ff&locale=en&siid=' + os.environ.get('SIID', '1520435234586')
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0'
 jar = http.cookiejar.MozillaCookieJar(os.environ['COOKIES'])
 jar.load(ignore_discard=True, ignore_expires=True)

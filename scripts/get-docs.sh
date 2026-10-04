@@ -18,5 +18,5 @@ if [ x$1 = x ]; then
 fi
 
 ${SCRIPT_BASE}/confirm-login.sh || exit 1
-export COOKIES DOWNLOAD_TO WEBSITE
+export COOKIES DOWNLOAD_TO WEBSITE SIID
 python3 ${SCRIPT_BASE}/tis-docs.py "$@"
