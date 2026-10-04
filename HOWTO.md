@@ -44,6 +44,16 @@ If the identifiers are different per section just run the relevant ones.  This c
 
 9. If you have an existing version that you're updating or adding additional vehicles to, merge into existing site: ```~/tis-clone/scripts/tis-merge.sh```.  While it's not strictly necessary to copy and merge documents into a different final location than the $DOWNLOAD_TO folder, it is highly recommeneded to do so especially if you have multiple FSMs as it will allow you to update docs in the background rather than having updates (which can include failures) overwriting your live website.
 
+# Shortcut: find and download everything for a vehicle
+Instead of steps 3 and 4 you can let the scripts find the identifiers and documents:
+
+         ~/tis-clone/scripts/search.sh --list-models                          # valid model names
+         ~/tis-clone/scripts/search.sh --model "Prius Prime" --year 2019      # show what TIS has
+         ~/tis-clone/scripts/search.sh --model "Prius Prime" --year 2019 --download
+         ~/tis-clone/scripts/search.sh --vin <your VIN> --download            # model and year from the VIN
+
+It runs the same library search as the website, reads every result tab (following "next" pages), and writes the list to $DOWNLOAD_TO/<division>-<model>-<year>.plan.  With --download it fetches each manual (repair, wiring, new car features, collision repair) and every standalone document (bulletins, collision repair bulletins, campaigns, accessory and training guides).  Then continue with step 5.
+
 # Session problems
 TIS allows one session per account.  Logging in with a browser while a download runs ends the download's session, and the reverse.  Stay logged out of the website while downloading, and run only one download at a time.
 
