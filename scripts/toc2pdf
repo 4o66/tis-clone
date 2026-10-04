@@ -40,6 +40,7 @@ foreach my $yearhash (@{$toc->{"termdata"}[0]->{"yeardata"}}){
 push (@YEARS, "NONE") if ($#YEARS < 0);
 
 foreach my $YYYY (sort @YEARS) {
+	$nav = {};	# start each year empty, or every year inherits the earlier years' documents
 	foreach my $entry (@{$toc->{"item"}}) {
 		my ($cat1, $cat2, $cat3, $item, $link);
 
@@ -53,10 +54,12 @@ foreach my $YYYY (sort @YEARS) {
 				$cat3 = "Body" if ($cat3 eq "body");
 		
 				if (defined($hash3->{"tocdata"})) {
-				    for (my $POS=0; $POS < $#{$hash3->{"tocdata"}}; $POS++) {
+				    # A group's first tocdata describes the group itself; each document's own
+				    # tocdata follows it.  So document $POS goes with tocdata $POS + 1.
+				    for (my $POS=0; $POS <= $#{$hash3->{"item"}}; $POS++) {
 					my $hash4 = @{$hash3->{"item"}}[$POS];
-			    		my $fromyear = $hash3->{"tocdata"}[$POS]->{"fromyear"};
-   					my $toyear   = $hash3->{"tocdata"}[$POS]->{"toyear"};
+			    		my $fromyear = $hash3->{"tocdata"}[$POS + 1]->{"fromyear"};
+   					my $toyear   = $hash3->{"tocdata"}[$POS + 1]->{"toyear"};
 
 					$link = $hash4->{"href"};
 					$item = @{$hash4->{"name"}}[0] || $hash4->{"name"};
@@ -66,11 +69,11 @@ foreach my $YYYY (sort @YEARS) {
 				    }
 				} else {
 				    if (defined($hash3->{"item"})) {
-				        for (my $POS=0; $POS < $#{$hash3->{"item"}}; $POS++) {
+				        for (my $POS=0; $POS <= $#{$hash3->{"item"}}; $POS++) {
 		    			    my $hash4 = @{$hash3->{"item"}}[$POS];
 					    if (!defined($hash4)) { $hash4 = $hash3; }
 					    $link = $hash4->{"href"};
-					    $item = @{$hash4->{"name"}}[$POS] || $hash4->{"name"};
+					    $item = @{$hash4->{"name"}}[0] || $hash4->{"name"};
        		     			    push (@{$nav->{$topic}->{$cat1}->{$cat2}->{$cat3}}, [$item, $link, $item]);
 				        }
 				    } else {

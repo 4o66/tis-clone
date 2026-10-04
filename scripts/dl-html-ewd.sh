@@ -57,7 +57,7 @@ for png in `$WG ${WEBSITE}/t3Portal/external/en/ewdappu/${EM}/ewd/intro/guide.ht
 done
 
 for i in `seq 1 9`; do 
-	$WG ${WEBSITE}/t3Portal/external/en/ewdappu/EM27J0U/ewd/icon/zoombar_0${i}.png
+	$WG ${WEBSITE}/t3Portal/external/en/ewdappu/${EM}/ewd/icon/zoombar_0${i}.png
 done
 
 for IMG in `grep img.*src ${FSM_URLBASE}/t3Portal/external/en/ewdappu/${EM}/ewd/intro/*|sed -e 's/^.*img.*src=//g'|cut -d\" -f2`; do
