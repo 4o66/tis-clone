@@ -44,6 +44,18 @@ If the identifiers are different per section just run the relevant ones.  This c
 
 9. If you have an existing version that you're updating or adding additional vehicles to, merge into existing site: ```~/tis-clone/scripts/tis-merge.sh```.  While it's not strictly necessary to copy and merge documents into a different final location than the $DOWNLOAD_TO folder, it is highly recommeneded to do so especially if you have multiple FSMs as it will allow you to update docs in the background rather than having updates (which can include failures) overwriting your live website.
 
+# Session problems
+TIS allows one session per account.  Logging in with a browser while a download runs ends the download's session, and the reverse.  Stay logged out of the website while downloading, and run only one download at a time.
+
+If a session lapses, try ```~/tis-clone/scripts/tis-renew.sh``` before logging in again.  It asks the portal for a new session using the sign-on token that tis-login.sh saved, with no password or verification code.  This works while that token is still valid; a login somewhere else usually ends it, and then you need tis-login.sh again.
+
+# Bulletins and other documents
+Service bulletins, collision repair bulletins, campaigns, accessory installation instructions and quick training guides are separate documents rather than part of a manual.  Search for your vehicle on the TIS site, open a result, and note its type and ID from the link (```objType=``` and the folder after it, e.g. ```sb-usa-tdm/T-SB-0012-21```).  Then:
+
+         ~/tis-clone/scripts/get-docs.sh sb-usa-tdm:T-SB-0012-21 sb:T-BO005-92 crib:T-CRIB-201-D
+
+They are saved as PDFs under $DOWNLOAD_TO/docs/<type>/.  Bulletins come in several types (```sb```, ```sb-usa-tdm```, ```sb-tdm```, ```sb-tci```), and older ones carry a ```T-``` prefix in their ID; the list is in scripts/tis-docs.py.
+
 # How to use what you just downloaded
 While you can locally browse the "HTML" files you download using your web browser, typical browser security prevents the Javascript used in the website from reading local files off your PC.  Normally that security restriction is a good thing, but in this case it makes displaying the website a challenge as many of the pages will display but the links won't work, or only part of the page will display.
 
